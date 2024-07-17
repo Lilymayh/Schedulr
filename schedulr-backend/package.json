@@ -4,7 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
+},
+"jest": {
+  "testEnvironment": "node",
+  "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.js$",
+  "moduleFileExtensions": ["js", "json"],
+  "moduleNameMapper": {
+    "^@/(.*)$": "<rootDir>/src/$1"
+  }
   },
   "keywords": [],
   "author": "",
@@ -12,6 +20,10 @@
   "dependencies": {
     "express": "^4.19.2",
     "pg": "^8.12.0",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "sequelize-cli": "^6.6.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
