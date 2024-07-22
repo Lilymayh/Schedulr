@@ -21,44 +21,44 @@ with Node.js, Express, and PostgreSQL, utilizing Sequelize ORM.
 
 # Set up
 
-1. Clone repository: 'git clone https://github.com/Lilymayh/Schedulr.git'
-- 'cd Schedulr'
+1. Clone repository: `git clone https://github.com/Lilymayh/Schedulr.git`
+- `cd Schedulr`
 
 2. Install Backend dependecies: 
-- 'cd schedulr-backend'
-- 'npm install'
+- `cd schedulr-backend`
+- `npm install`
 
-3. Add the following content to a '.env':
-`DB_NAME=schedulr_dev
+3. Add the following content to a `.env`:
+'DB_NAME=schedulr_dev
 DB_USER=your_db_user
 DB_PASS=your_db_password
 DB_HOST=localhost
-DB_DIALECT=postgres`
+DB_DIALECT=postgres'
 
 4. Run database migrations:
-- 'npx sequelize-cli db:migrate'
+- `npx sequelize-cli db:migrate`
 
 5. Install frontend dependencies:
-- 'cd ../schedulr-web'
-- 'npm install'
+- `cd ../schedulr-web`
+- `npm install`
 
 6. Install mobile dependencies:
-- 'cd ../schedulrmobile'
-- npm install
+- `cd ../schedulrmobile`
+- `npm install`
 
 # Running
 
-- Start schedulr-backend with 'npm start', then run either:
+- Start schedulr-backend with `npm start`, then run either:
 
-1. Schedulr web: 'cd schedulr-web'
--> 'npm start'
+1. Schedulr web: `cd schedulr-web`
+- `npm start`
 
-2. Schedulr mobile: 'cd SchedulrMobile'
--> 'npx react-native run-ios'
+2. Schedulr mobile: `cd SchedulrMobile`
+- `npx react-native run-ios`
 or
--> 'npx react-native run-android'
+- `npx react-native run-android`
 
 # Testing
 
-1. 'cd schedulr-backend'
-2. 'npm test'
+1. `cd schedulr-backend`
+2. `npm test`
