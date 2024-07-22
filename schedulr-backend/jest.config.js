@@ -2,13 +2,13 @@
 const config = {
   verbose: true,
   testEnvironment: 'node',
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.js$',
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.js$', // Ensure it matches your test files
   moduleFileExtensions: ['js', 'json'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
-  rootDir: '.', // Ensure this is set to the project root
-  setupFiles: ['dotenv/config'], // Load environment variables from .env file
+  rootDir: '.', // Project root
+  setupFiles: ['dotenv/config'],
 };
 
 module.exports = config;
