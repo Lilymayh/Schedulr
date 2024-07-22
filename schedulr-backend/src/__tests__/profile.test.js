@@ -19,10 +19,31 @@ describe('Profile Model', () => {
     const profile = await Profile.create({
       user_id: 1,
       avatar: 'https://example.com/avatar.jpg',
-      first_name: 'John',
+      first_name: 'Jane',
       last_name: 'Doe'
     });
 
 		expect(profile.user_id).toBe(1);
+	}),
+	it('should create a profile with a valid avatar', async () => {
+    const profile = await Profile.create({
+      user_id: 1,
+      avatar: 'https://example.com/avatar.jpg',
+      first_name: 'Jane',
+      last_name: 'Doe'
+    });
+
+		expect(profile.avatar).toBe('https://example.com/avatar.jpg');
+	}),
+	it('should create a profile with a valid first and last name', async () => {
+    const profile = await Profile.create({
+      user_id: 1,
+      avatar: 'https://example.com/avatar.jpg',
+      first_name: 'Jane',
+      last_name: 'Doe'
+    });
+
+		expect(profile.first_name).toBe('Jane');
+		expect(profile.last_name).toBe('Doe');
 	})
 })
