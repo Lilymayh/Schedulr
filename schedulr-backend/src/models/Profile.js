@@ -2,6 +2,12 @@ const { DataTypes } = require('sequelize');
 
 const ProfileModel = (sequelize) => {
   return sequelize.define('Profile', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false
+    },
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -22,6 +28,6 @@ const ProfileModel = (sequelize) => {
       allowNull: false,
     },
   });
-};
+}
 
 module.exports = ProfileModel;

@@ -21,7 +21,8 @@ with Node.js, Express, and PostgreSQL, utilizing Sequelize ORM.
 
 # Set up
 
-1. Clone repository: `git clone https://github.com/Lilymayh/Schedulr.git`
+1. Clone repository: 
+- `git clone https://github.com/Lilymayh/Schedulr.git`
 - `cd Schedulr`
 
 2. Install Backend dependecies: 
@@ -29,6 +30,7 @@ with Node.js, Express, and PostgreSQL, utilizing Sequelize ORM.
 - `npm install`
 
 3. Add the following content to a `.env`:
+
 'DB_NAME=schedulr_dev
 DB_USER=your_db_user
 DB_PASS=your_db_password
@@ -43,7 +45,7 @@ DB_DIALECT=postgres'
 - `npm install`
 
 6. Install mobile dependencies:
-- `cd ../schedulrmobile`
+- `cd ../SchedulrMobile`
 - `npm install`
 
 # Running
