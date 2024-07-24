@@ -34,6 +34,10 @@ const UserModel = (sequelize) => {
 			foreignKey: 'user_id',
 			as: 'profile'
 		});
+    User.hasMany(models.Notification, {
+      foreignKey: 'user_id',
+			as: 'notifications'
+    })
 	};
 
 	return User;
