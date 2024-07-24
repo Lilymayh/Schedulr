@@ -26,6 +26,10 @@ const UserModel = (sequelize) => {
   });
 
 	User.associate = (models) => {
+    User.hasMany(models.Reminder, {
+      foreignKey: 'user_id',
+			as: 'reminders'
+    });
 		User.hasOne(models.Profile, {
 			foreignKey: 'user_id',
 			as: 'profile'

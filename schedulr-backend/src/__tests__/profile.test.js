@@ -1,14 +1,6 @@
 require('dotenv').config();
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../../config/sequelize');
+const { User, Profile, sequelize } = require('../models');
 
-const ProfileModel = require('../models/profile');
-const UserModel = require('../models/user');
-const Profile = ProfileModel(sequelize, DataTypes);
-const User = UserModel(sequelize, DataTypes);
-//sync models for association
-User.associate({ Profile });
-Profile.associate({ User });
 
 describe('Profile Model', () => {
   //Use async/await instead of .then()/.catch() to handle promises.

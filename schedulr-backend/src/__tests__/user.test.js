@@ -1,9 +1,6 @@
 require('dotenv').config();
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../../config/sequelize');
+const { User, sequelize } = require('../models');
 
-const UserModel = require('../models/user');
-const User = UserModel(sequelize, DataTypes);
 
 describe('User Model', () => {
 	//Use async/await instead of .then()/.catch() to handle promises.
