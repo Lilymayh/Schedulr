@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 const ProfileModel = (sequelize) => {
-  return sequelize.define('Profile', {
+  const Profile = sequelize.define('Profile', {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -28,6 +28,15 @@ const ProfileModel = (sequelize) => {
       allowNull: false,
     },
   });
+
+  Profile.associate = (models) => {
+		Profile.belongsTo(models.User, {
+			foreignKey: 'user_id',
+			as: 'user'
+		});
+	};
+
+	return Profile;
 }
 
 module.exports = ProfileModel;
