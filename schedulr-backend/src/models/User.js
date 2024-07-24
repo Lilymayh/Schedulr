@@ -30,14 +30,14 @@ const UserModel = (sequelize) => {
       foreignKey: 'user_id',
 			as: 'reminders'
     });
-		User.hasOne(models.Profile, {
-			foreignKey: 'user_id',
-			as: 'profile'
-		});
     User.hasMany(models.Notification, {
       foreignKey: 'user_id',
 			as: 'notifications'
     })
+		User.hasOne(models.Profile, {
+			foreignKey: 'user_id',
+			as: 'profile'
+		});
 	};
 
 	return User;
