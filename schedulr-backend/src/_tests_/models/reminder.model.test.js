@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { User, Reminder, sequelize } = require('../models');
+const { User, Reminder, sequelize } = require('../../models');
 
 describe('Reminder Model', () => {
   //Use async/await instead of .then()/.catch() to handle promises.

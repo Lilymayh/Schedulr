@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { User, sequelize } = require('../models');
+const { User, sequelize } = require('../../models');
 
 
 describe('User Model', () => {
