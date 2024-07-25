@@ -20,7 +20,7 @@ describe('Profile Model', () => {
 
     const profile = await Profile.create({
       user_id: user.id,
-      avatar: 'https://example.com/avatar.jpg',
+      avatar: 'avatar.jpg',
       first_name: 'Jane',
       last_name: 'Doe'
     });
@@ -42,12 +42,12 @@ describe('Profile Model', () => {
 
     const profile = await Profile.create({
       user_id: user.id,
-      avatar: 'https://example.com/avatar.jpg',
+      avatar: 'avatar.jpg',
       first_name: 'Jane',
       last_name: 'Doe'
     });
 
-    expect(profile.avatar).toBe('https://example.com/avatar.jpg');
+    expect(profile.avatar).toBe('avatar.jpg');
   });
 
   it('should create a profile with a valid first and last name', async () => {
@@ -59,7 +59,7 @@ describe('Profile Model', () => {
 
     const profile = await Profile.create({
       user_id: user.id,
-      avatar: 'https://example.com/avatar.jpg',
+      avatar: 'avatar.jpg',
       first_name: 'Jane',
       last_name: 'Doe'
     });
