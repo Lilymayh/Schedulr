@@ -1,4 +1,3 @@
-require('dotenv').config();
 const { User, sequelize } = require('../../models');
 
 

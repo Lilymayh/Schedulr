@@ -1,4 +1,3 @@
-require('dotenv').config();
 const { User, Reminder, sequelize } = require('../../models');
 
 describe('Reminder Model', () => {

@@ -1,4 +1,3 @@
-require('dotenv').config();
 const { User, Notification, Reminder, sequelize } = require('../../models');
 
 

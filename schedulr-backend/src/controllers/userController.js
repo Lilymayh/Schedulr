@@ -32,8 +32,11 @@ const deleteUser = async (req, res) => {
 	const user = await User.findByPk(id);
 
 	if (user) {
-		await user.destroy()
-	}
+    await user.destroy();
+    return res.status(204).send(); // Send a response indicating successful deletion
+  } else {
+    return res.status(404).json({ message: 'User not found' }); // Handle case where user is not found
+  }
 };
 
 
