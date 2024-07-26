@@ -1,5 +1,5 @@
-require('dotenv').config(); 
 const { Sequelize } = require('sequelize');
+require('dotenv').config(); 
 
 const databaseUrl = `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`;
 
@@ -8,4 +8,4 @@ const sequelize = new Sequelize(databaseUrl, {
   logging: false,
 });
 
-module.exports = sequelize;
+module.exports = { sequelize };

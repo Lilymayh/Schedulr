@@ -11,9 +11,10 @@ const ProfileModel = (sequelize) => {
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        isInt: true,
-      },
+      references: {
+        model: 'User',
+        key: 'id'
+      }
 		},
     avatar: {
       type: DataTypes.STRING,

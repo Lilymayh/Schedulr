@@ -1,5 +1,4 @@
-const { Sequelize } = require('sequelize');
-const sequelize = require('../../config/sequelize');
+const { sequelize } = require('../../config/sequelize');
 
 const UserModel = require('./user');
 const ReminderModel = require('./reminder');
@@ -18,4 +17,4 @@ Reminder.associate({ User, Notification });
 Profile.associate({ User }); 
 Notification.associate({ User, Reminder })
 
-module.exports = { User, Reminder, Profile, Notification, sequelize };
+module.exports = { sequelize, User, Reminder, Profile, Notification };

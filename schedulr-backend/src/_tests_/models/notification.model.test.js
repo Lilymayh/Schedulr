@@ -4,7 +4,7 @@ const { User, Notification, Reminder, sequelize } = require('../../models');
 describe('Notification Model', () => {
   //Use async/await instead of .then()/.catch() to handle promises.
   beforeAll(async () => {
-    await sequelize.sync({ force: true });
+    await sequelize.sync();
   });
 
   afterAll(async () => {

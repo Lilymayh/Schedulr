@@ -4,7 +4,7 @@ const { User, Profile, sequelize } = require('../../models');
 describe('Profile Model', () => {
   //Use async/await instead of .then()/.catch() to handle promises.
   beforeAll(async () => {
-    await sequelize.sync({ force: true });
+    await sequelize.sync();
   });
 
   afterAll(async () => {

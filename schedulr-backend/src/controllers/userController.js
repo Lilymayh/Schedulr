@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Profile } = require('../models');
 
 const createUser = async (req, res) => {
 	const { username, email, password } = req.body;
@@ -28,15 +28,15 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-	const { id } = req.params;
-	const user = await User.findByPk(id);
+	const userId = req.params.id;
+	const user = await User.findByPk(userId);
 
 	if (user) {
-    await user.destroy();
-    return res.status(204).send(); // Send a response indicating successful deletion
-  } else {
-    return res.status(404).json({ message: 'User not found' }); // Handle case where user is not found
-  }
+		await Profile.destroy({ where: { user_id: userId } });
+		await User.destroy({ where: { id: userId }});
+		return res.status(204).send();
+	}
+	return res.status(404).json({ message: 'User not found' });
 };
 
 

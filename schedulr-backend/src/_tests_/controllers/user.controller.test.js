@@ -1,4 +1,5 @@
-const { sequelize } = require('../../models');
+const { User } = require('../../models');
+const { sequelize } = require('../../../config/sequelize');
 const app = require('../../../app');
 const request = require('supertest');
 
@@ -17,7 +18,7 @@ describe('User Controller', () => {
 	let userId;
 
 	beforeAll(async () => {
-		await sequelize.sync({ force: true });
+		await sequelize.sync();
 	});
 
 	afterAll(async () => {

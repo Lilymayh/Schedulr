@@ -1,4 +1,5 @@
-const { sequelize } = require('../../models');
+const { User, Profile } = require('../../models');
+const { sequelize } = require('../../../config/sequelize');
 const app = require('../../../app');
 const request = require('supertest');
 
@@ -26,15 +27,8 @@ const createProfile = async (userId) => {
 };
 
 describe('Profile Controller', () => {
-	let userId;
-	let profileId;
-
 	beforeAll(async () => {
-		await sequelize.sync({ force: true });
-		const user = await createUser();
-		userId = user.id;
-		const profile = await createProfile(userId);
-		profileId = profile.id;
+		await sequelize.sync();
 	});
 
 	afterAll(async () => {
@@ -42,6 +36,8 @@ describe('Profile Controller', () => {
 	});
 
 	it('should create a profile', async () => {
+		const user = await createUser();
+		const userId = user.id;
 		const profile = await createProfile(userId);
 
 		expect(profile).toHaveProperty('id');
@@ -49,6 +45,11 @@ describe('Profile Controller', () => {
 	});
 
 	it('should get a profile', async () => {
+		const user = await createUser();
+		const userId = user.id;
+		const profile = await createProfile(userId);
+		const profileId = profile.id;
+
 		const getProfile = await request(app)
 			.get(`/api/profiles/${profileId}`);
 
@@ -57,6 +58,11 @@ describe('Profile Controller', () => {
 	});
 
 	it('should update a profile', async () => {
+		const user = await createUser();
+		const userId = user.id;
+		const profile = await createProfile(userId);
+		const profileId = profile.id;
+
 		const updateProfile = await request(app)
 			.put(`/api/profiles/${profileId}`)
 			.send({
@@ -68,14 +74,20 @@ describe('Profile Controller', () => {
 	});
 
 	it('should delete a user and associated profile', async () => {
-		const deleteUser = await request(app)
-			.delete(`/api/users/${userId}`);
+		const user = await createUser();
+		const userId = user.id;
 
-		expect(deleteUser.status).toBe(204);
+		const profile = await createProfile(userId);
+		const profileId = profile.id;
 
-		const getProfile = await request(app)
-			.get(`/api/profiles/${profileId}`);
+		await request(app)
+			.delete(`/api/users/${userId}`)
+			.expect(204);
 
-		expect(getProfile.status).toBe(404);
+		const deletedUser = await User.findByPk(userId);
+		expect(deletedUser).toBeNull();
+
+		const deletedProfile = await Profile.findByPk(profileId);
+		expect(deletedProfile).toBeNull();
 	});
 });

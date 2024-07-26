@@ -35,8 +35,11 @@ const UserModel = (sequelize) => {
 			as: 'notifications'
     })
 		User.hasOne(models.Profile, {
-			foreignKey: 'user_id',
-			as: 'profile'
+			foreignKey: {
+        name: 'user_id',
+        onDelete: 'CASCADE'
+      },
+			as: 'profile',
 		});
 	};
 
