@@ -37,7 +37,10 @@ const ReminderModel = (sequelize) => {
 			as: 'user'
 		});
     Reminder.hasMany(models.Notification, { 
-      foreignKey: 'reminder_id', 
+      foreignKey: {
+        name: 'reminder_id',
+        onDelete: 'CASCADE'
+      },
       as: 'notifications' 
     });
 	};
