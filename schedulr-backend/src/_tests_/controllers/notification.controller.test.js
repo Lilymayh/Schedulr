@@ -120,13 +120,13 @@ describe('Reminder Controller', () => {
 			.delete(`/api/users/${userId}`)
 			.expect(204);
 
-		const deletedUser = await User.findByPk(notificationId);
+		const deletedUser = await User.findByPk(userId);
 		expect(deletedUser).toBeNull();
 
-		const deletedReminder = await User.findByPk(notificationId);
+		const deletedReminder = await Reminder.findByPk(reminderId);
 		expect(deletedReminder).toBeNull();
 
-		const deletedNotification = await Notification.findByPk(reminderId);
+		const deletedNotification = await Notification.findByPk(notificationId);
 		expect(deletedNotification).toBeNull();
 	});
 });

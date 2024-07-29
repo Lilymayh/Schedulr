@@ -11,16 +11,18 @@ const NotificationModel = (sequelize) => {
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        isInt: true,
-      },
+      references: {
+        model: 'User',
+        key: 'id'
+      }
 		},
     reminder_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        isInt: true,
-      },
+      references: {
+        model: 'Reminder',
+        key: 'id'
+      }
 		},
     notification_time: {
       type: DataTypes.DATE,

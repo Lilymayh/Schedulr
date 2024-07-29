@@ -11,9 +11,10 @@ const ReminderModel = (sequelize) => {
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        isInt: true,
-      },
+      references: {
+        model: 'User',
+        key: 'id'
+      }
 		},
     title: {
       type: DataTypes.STRING,
@@ -37,10 +38,8 @@ const ReminderModel = (sequelize) => {
 			as: 'user'
 		});
     Reminder.hasMany(models.Notification, { 
-      foreignKey: {
-        name: 'reminder_id',
-        onDelete: 'CASCADE'
-      },
+      foreignKey: 'reminder_id',
+      onDelete: 'CASCADE',
       as: 'notifications' 
     });
 	};

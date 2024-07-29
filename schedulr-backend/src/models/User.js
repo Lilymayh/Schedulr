@@ -27,24 +27,18 @@ const UserModel = (sequelize) => {
 
 	User.associate = (models) => {
     User.hasMany(models.Reminder, {
-      foreignKey: {
-        name: 'user_id',
-        onDelete: 'CASCADE'
-      },
+      foreignKey: 'user_id',
+      onDelete: 'CASCADE',
 			as: 'reminders'
     });
     User.hasMany(models.Notification, {
-      foreignKey: {
-        name: 'user_id',
-        onDelete: 'CASCADE'
-      },
+      foreignKey: 'user_id',
+      onDelete: 'CASCADE',
 			as: 'notifications'
     })
 		User.hasOne(models.Profile, {
-			foreignKey: {
-        name: 'user_id',
-        onDelete: 'CASCADE'
-      },
+			foreignKey: 'user_id',
+      onDelete: 'CASCADE',
 			as: 'profile',
 		});
 	};
