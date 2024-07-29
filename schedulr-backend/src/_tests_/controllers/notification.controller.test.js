@@ -47,11 +47,24 @@ describe('Reminder Controller', () => {
 		await sequelize.close();
 	});
 
-	it('should create a notification', async () => {
+	afterEach(async () => {
+    await sequelize.truncate({ cascade: true });
+  });
+
+	let userId;
+	let reminderId;
+	let notificationId;
+
+	beforeEach(async () => {
 		const user = await createUser();
-		const userId = user.id;
+		userId = user.id;
 		const reminder = await createReminder(userId);
-		const reminderId = reminder.id;
+		reminderId = reminder.id;
+		const notification = await createNotification(userId, reminderId);
+		notificationId = notification.id;
+	})
+
+	it('should create a notification', async () => {
 		const notification = await createNotification(userId, reminderId);
 
 		expect(notification).toHaveProperty('id');
@@ -60,12 +73,6 @@ describe('Reminder Controller', () => {
 	});
 
 	it('should get a reminder', async () => {
-		const user = await createUser();
-		const userId = user.id;
-		const reminder = await createReminder(userId);
-		const reminderId = reminder.id;
-		const notification = await createNotification(userId, reminderId);
-		const notificationId = notification.id;
 
 		const getNotification = await request(app)
 			.get(`/api/notifications/${notificationId}`);
@@ -75,12 +82,6 @@ describe('Reminder Controller', () => {
 	});
 
 	it('should update a reminder', async () => {
-		const user = await createUser();
-		const userId = user.id;
-		const reminder = await createReminder(userId);
-		const reminderId = reminder.id;
-		const notification = await createNotification(userId, reminderId);
-		const notificationId = notification.id;
 
 		const updateNotification = await request(app)
 			.put(`/api/notifications/${notificationId}`)
@@ -93,12 +94,6 @@ describe('Reminder Controller', () => {
 	});
 
 	it('should delete a a notification', async () => {
-		const user = await createUser();
-		const userId = user.id;
-		const reminder = await createReminder(userId);
-		const reminderId = reminder.id;
-		const notification = await createNotification(userId, reminderId);
-		const notificationId = notification.id;
 
 		await request(app)
 			.delete(`/api/notifications/${notificationId}`)
@@ -109,13 +104,7 @@ describe('Reminder Controller', () => {
 	});
 
 	it('should delete a user or reminder and associated notification', async () => {
-		const user = await createUser();
-		const userId = user.id;
-		const reminder = await createReminder(userId);
-		const reminderId = reminder.id;
-		const notification = await createNotification(userId, reminderId);
-		const notificationId = notification.id;
-
+	
 		await request(app)
 			.delete(`/api/users/${userId}`)
 			.expect(204);
