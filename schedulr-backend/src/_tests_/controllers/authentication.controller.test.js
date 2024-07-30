@@ -5,17 +5,26 @@ const app = require('../../../app');
 const request = require('supertest');
 
 const createUser = async () => {
+	const hashedPass = await bcrypt.hash('password', 10)
 	const response = await request(app)
 		.post('/api/users')
 		.send({
 			username: 'user',
 			email: 'test@email.com',
-			password: 'hashedPass'
+			password: hashedPass
 		});
 	return response.body;
 };
 
 describe('Authentication Controller', () => {
+	beforeAll(async () => {
+		await sequelize.sync();
+	});
+
+	afterAll(async () => {
+		await sequelize.close();
+	});
+
 	it('should login a user with valid credentials', async () => {
 		await createUser();
 

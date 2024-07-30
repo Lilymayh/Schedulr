@@ -48,36 +48,6 @@ describe('User Controller', () => {
 		expect(getUser.body).toHaveProperty('username', 'user');
 	});
 
-	it('should login a user with valid credentials', async () => {
-		await createUser();
-
-		const login = await request(app)
-			.post(`/api/login`)
-			.send({
-				username: 'user',
-				email: 'test@email.com',
-				password: 'password'
-			});
-
-		expect(login.status).toBe(200);
-		expect(login.body).toHaveProperty('email', 'test@email.com');
-	});
-
-	it('should not login a user with invalid credentials', async () => {
-		await createUser();
-
-		const login = await request(app)
-			.post(`/api/login`)
-			.send({
-				username: 'user',
-				email: 'test@email.com',
-				password: 'wrongPassword'
-			});
-
-		expect(login.status).toBe(401);
-		expect(login.body).toHaveProperty('error', 'Invalid login credentials');
-	});
-
 	it('should update a user', async () => {
 		const user = await createUser();
 		const userId = user.id;
