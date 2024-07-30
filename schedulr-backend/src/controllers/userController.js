@@ -1,43 +1,77 @@
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 const { User, Profile } = require('../models');
 
 const createUser = async (req, res) => {
 	const { username, email, password } = req.body;
-	const user = await User.create({ username, email, password });
 
-	res.status(201).json(user);
+	if (!username || !email || !password) {
+		res.status(404).json({ message: 'Username, email, and password must all be provided' });
+	}
+
+	try {
+		const hashedPass = await bcrypt.hash(password, 10);
+		const user = await User.create({ username, email, password: hashedPass });
+
+		res.status(201).json(user);
+	}
+	catch {
+		res.status(500).json({ message: 'Error creating user' });
+	}
 };
 
 const getUser = async (req, res) => {
 	const { id } = req.params;
-	const user = await User.findByPk(id);
 
-	if (user) {
-		res.status(200).json(user);
+	try {
+		const user = await User.findByPk(id);
+
+		if (user) {
+			res.status(200).json(user);
+		}
+	}
+	catch
+	{
+		res.status(500).json({ message: 'Error fetching user' });
 	}
 };
 
 const updateUser = async (req, res) => {
 	const { id } = req.params;
 	const { username, email, password } = req.body;
-	const user = await User.findByPk(id);
 
-	if (user) {
-		await user.update({ username, email, password });
-		res.status(200).json(user);
+	try {
+		const user = await User.findByPk(id);
+
+		if (user) {
+			const updatedUser = { username, email };
+
+			if (password) {
+				updatedUser.password = await bcrypt.hash(password, 10);
+			}
+			await user.update(updatedUser);
+			res.status(200).json(user);
+		}
+	}
+	catch {
+		res.status(404).json({ message: 'Error updating user' });
 	}
 };
 
 const deleteUser = async (req, res) => {
 	const userId = req.params.id;
-	const user = await User.findByPk(userId);
 
-	if (user) {
-		await Profile.destroy({ where: { user_id: userId } });
-		await User.destroy({ where: { id: userId }});
-		return res.status(204).send();
+	try {
+		const user = await User.findByPk(userId);
+
+		if (user) {
+			await Profile.destroy({ where: { user_id: userId } });
+			await User.destroy({ where: { id: userId } });
+			return res.status(204).send();
+		}
 	}
-	return res.status(404).json({ message: 'User not found' });
+	catch {
+		return res.status(404).json({ message: 'Error deleting user' });
+	}
 };
 
 
