@@ -5,10 +5,13 @@ const profileRoutes = require('./src/routes/profileRoutes');
 const reminderRoutes = require('./src/routes/reminderRoutes');
 const notificationRoutes = require('./src/routes/notificationRoutes');
 
+//parse JSON
 app.use(express.json());
-app.use('/api', userRoutes);
-app.use('/api', profileRoutes);
-app.use('/api', reminderRoutes);
-app.use('/api', notificationRoutes);
+
+
+app.use('/api/users', userRoutes);
+app.use('/api/profiles', profileRoutes);
+app.use('/api/reminders', reminderRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 module.exports = app;
