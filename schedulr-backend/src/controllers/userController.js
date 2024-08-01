@@ -1,5 +1,5 @@
-const bcrypt = require('bcryptjs');
 const { User, Profile } = require('../models');
+const bcrypt = require('bcryptjs');
 
 const createUser = async (req, res) => {
 	const { username, email, password } = req.body;
@@ -9,13 +9,12 @@ const createUser = async (req, res) => {
 	}
 
 	try {
-		const hashedPass = await bcrypt.hash(password, 10);
-		const user = await User.create({ username, email, password: hashedPass });
+		const user = await User.create({ username, email, password });
 
-		res.status(201).json(user);
+		return res.status(201).json(user);
 	}
 	catch {
-		res.status(500).json({ message: 'Error creating user' });
+		return res.status(500).json({ message: 'Error creating user' });
 	}
 };
 
@@ -26,12 +25,12 @@ const getUser = async (req, res) => {
 		const user = await User.findByPk(id);
 
 		if (user) {
-			res.status(200).json(user);
+			return res.status(200).json(user);
 		}
 	}
 	catch
 	{
-		res.status(500).json({ message: 'Error fetching user' });
+		return res.status(500).json({ message: 'Error fetching user' });
 	}
 };
 
@@ -49,11 +48,11 @@ const updateUser = async (req, res) => {
 				updatedUser.password = await bcrypt.hash(password, 10);
 			}
 			await user.update(updatedUser);
-			res.status(200).json(user);
+			return res.status(200).json(user);
 		}
 	}
 	catch {
-		res.status(404).json({ message: 'Error updating user' });
+		return res.status(404).json({ message: 'Error updating user' });
 	}
 };
 

@@ -1,4 +1,6 @@
 const { DataTypes } = require('sequelize');
+const bcrypt = require('bcryptjs');
+
 
 const UserModel = (sequelize) => {
   const User = sequelize.define('User', {
@@ -23,6 +25,12 @@ const UserModel = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+  });
+
+  User.beforeCreate(async (user) => {
+    if (user.password) {
+      user.password = await bcrypt.hash(user.password, 10);
+    }
   });
 
 	User.associate = (models) => {

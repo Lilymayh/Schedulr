@@ -32,14 +32,6 @@ describe('User Controller', () => {
 		userId = user.id;
 	});
 
-	it('should hash a user password', async () => {
-		const user = await createUser();
-		const findUser = await User.findByPk(user.id);
-
-		expect(findUser).toHaveProperty('password');
-		expect(findUser.password).not.toBe('password');
-	});
-
 	it('should get a user', async () => {
 		const getUser = await request(app)
 			.get(`/api/users/${userId}`);

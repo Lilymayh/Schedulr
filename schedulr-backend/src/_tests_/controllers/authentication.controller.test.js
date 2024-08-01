@@ -1,17 +1,15 @@
-const bcrypt = require('bcryptjs');
 const { User } = require('../../models');
 const { sequelize } = require('../../../config/sequelize');
 const app = require('../../../app');
 const request = require('supertest');
 
 const createUser = async () => {
-	const hashedPass = await bcrypt.hash('password', 10)
 	const response = await request(app)
 		.post('/api/users')
 		.send({
 			username: 'user',
 			email: 'test@email.com',
-			password: hashedPass
+			password: 'password'
 		});
 	return response.body;
 };
@@ -26,10 +24,10 @@ describe('Authentication Controller', () => {
 	});
 
 	it('should login a user with valid credentials', async () => {
-		await createUser();
+		const user = await createUser();
 
 		const login = await request(app)
-			.post(`/api/login`)
+			.post(`/api/`)
 			.send({
 				username: 'user',
 				email: 'test@email.com',
@@ -44,7 +42,7 @@ describe('Authentication Controller', () => {
 		await createUser();
 
 		const login = await request(app)
-			.post(`/api/login`)
+			.post(`/api/`)
 			.send({
 				username: 'user',
 				email: 'test@email.com',
@@ -56,14 +54,15 @@ describe('Authentication Controller', () => {
 	});
 	it('should logout a user', async () => {
 		await request(app)
-			.post('/api/login')
+			.post('/api/')
 			.send({
 				username: 'user',
+				email: 'test@email.com',
 				password: 'password'
 			});
 
 		const response = await request(app)
-			.post('/api/logout');
+			.post('/api/');
 
 		expect(response.status).toBe(200);
 		expect(response.body).toHaveProperty('message', 'Logged out successfully');
