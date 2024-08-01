@@ -18,7 +18,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
 	cookie: {
-    httpOnly: true, // Prevents client-side script from accessing cookies
+    httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000 // Cookie expiry time
   }
 }));

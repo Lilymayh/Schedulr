@@ -11,6 +11,7 @@ const loginUser = async (req, res) => {
 			req.session.userId = user.id;
 			return res.status(200).json({ email: user.email });
 		}
+		return res.status(401).json({ error: 'Invalid login credentials' });
 	}
 	catch {
 		return res.status(500).json({ message: 'Error loging in' });
@@ -23,6 +24,7 @@ const logoutUser = (req, res) => {
 			if (err) {
 				return res.status(500).json({ error: 'Logout failed' });
 			}
+			return res.status(200).json({ message: 'Logged out successfully' });
 		});
 	} catch {
 		return res.status(500).json({ message: 'Error loging out' });

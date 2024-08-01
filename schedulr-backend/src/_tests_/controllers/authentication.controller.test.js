@@ -24,10 +24,10 @@ describe('Authentication Controller', () => {
 	});
 
 	it('should login a user with valid credentials', async () => {
-		const user = await createUser();
+		await createUser();
 
 		const login = await request(app)
-			.post(`/api/`)
+			.post(`/api/login`)
 			.send({
 				username: 'user',
 				email: 'test@email.com',
@@ -42,7 +42,7 @@ describe('Authentication Controller', () => {
 		await createUser();
 
 		const login = await request(app)
-			.post(`/api/`)
+			.post(`/api/login`)
 			.send({
 				username: 'user',
 				email: 'test@email.com',
@@ -53,8 +53,10 @@ describe('Authentication Controller', () => {
 		expect(login.body).toHaveProperty('error', 'Invalid login credentials');
 	});
 	it('should logout a user', async () => {
+		await createUser();
+
 		await request(app)
-			.post('/api/')
+			.post('/api/login')
 			.send({
 				username: 'user',
 				email: 'test@email.com',
@@ -62,7 +64,7 @@ describe('Authentication Controller', () => {
 			});
 
 		const response = await request(app)
-			.post('/api/');
+			.post('/api/logout');
 
 		expect(response.status).toBe(200);
 		expect(response.body).toHaveProperty('message', 'Logged out successfully');
