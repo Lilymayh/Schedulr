@@ -54,7 +54,7 @@ describe('Authentication Controller', () => {
 	});
 	it('should logout a user', async () => {
 		await createUser();
-
+		
 		await request(app)
 			.post('/api/login')
 			.send({
