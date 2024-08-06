@@ -10,7 +10,7 @@ test('should render Sing Up form', async () => {
 
 	expect(getByPlaceholderText('Email')).toBeTruthy();
 	expect(getByPlaceholderText('Password')).toBeTruthy();
-	expect(getByText('Sign Up')).toBeTruthy();
+	expect(getByText('Register')).toBeTruthy();
 })
 
 test('should handle user input', async () => {
@@ -35,7 +35,7 @@ test('should submit form successfully', async () => {
 	fireEvent.press(getByText('Register'));
 
 	await waitFor(() => {
-		expect(getByText('Registeration Successful')).toBeTruthy();
+		expect(getByText('Sign up Successful')).toBeTruthy();
 	});
 });
 
@@ -51,6 +51,6 @@ test('should submit form unsuccessfully', async () => {
 	fireEvent.press(getByText('Register'));
 
 	await waitFor(() => {
-		expect(getByText('Registeration failed')).toBeTruthy();
+		expect(getByText('Sign up failed')).toBeTruthy();
 	});
 });
