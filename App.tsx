@@ -1,9 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import {
   SafeAreaView,
-  StyleSheet,
   Text,
   View,
   Button
@@ -12,9 +11,21 @@ import {
 import LoginScreen from './src/screens/LoginScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 
-const Stack = createStackNavigator();
+type StackParamList = {
+  Landing: undefined;
+  Login: undefined;
+  GetStarted: undefined;
+};
 
-const LandingPage = ({ navigation }: any) => {
+const Stack = createStackNavigator<StackParamList>();
+
+type LandingPageNavigationProp = StackNavigationProp<StackParamList, 'Landing'>;
+
+type LandingPageProps = {
+  navigation: LandingPageNavigationProp;
+}
+
+const LandingPage: React.FC<LandingPageProps> = ({ navigation }) => {
   return (
     <SafeAreaView>
       <View>
@@ -32,7 +43,7 @@ const LandingPage = ({ navigation }: any) => {
   );
 };
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">

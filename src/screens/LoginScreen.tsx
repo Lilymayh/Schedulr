@@ -4,15 +4,26 @@ import CustomTextInput from '../components/CustomTextInput';
 import CustomButton from '../components/CustomButton';
 import axios from 'axios';
 
-const LoginScreen = () => {
-	const [ email, setEmail ] = useState('');
-	const [ password, setPassword ] = useState('');
-	const [ error, setError ] = useState('');
-	const [ success, setSuccess ] = useState('');
+interface LoginScreenState {
+  email: string;
+  password: string;
+  error: string;
+  success: string;
+}
 
+const LoginScreen: React.FC = () => {
+	const [ email, setEmail ] = useState<string>('');
+	const [ password, setPassword ] = useState<string>('');
+	const [ error, setError ] = useState<string>('');
+	const [ success, setSuccess ] = useState<string>('');
+
+	interface LoginResponse {
+    success: boolean;
+  }
+	
 	const handleLogin = async () => {
 		try {
-			const response = await axios.post('http://localhost:3000/api/login', {
+			const response = await axios.post<LoginResponse>('http://localhost:3000/api/login', {
 				email,
 				password
 			});
