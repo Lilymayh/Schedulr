@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 import CustomTextInput from '../components/CustomTextInput';
 import CustomButton from '../components/CustomButton';
 import axios from 'axios';
@@ -12,17 +12,19 @@ const LoginScreen = () => {
 
 	const handleLogin = async () => {
 		try {
-			const response = await axios.post(/* api endpoint */'', {
+			const response = await axios.post('http://localhost:3000/api/login', {
 				email,
 				password
 			});
 
+			setSuccess('')
+			setError('')
+
 			if (response.data.success) {
 				setSuccess('Login Successful')
-				setError('')
 				Alert.alert('Success', 'Login Successful!')
+				return;
 			}
-			setSuccess('')
 			setError('Login failed')
 			Alert.alert('Error', 'Error with Login details')
 		}
@@ -54,5 +56,22 @@ const LoginScreen = () => {
 		</View>
 	)
 }
+
+//basic tempporary AI generated stylings
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
+  },
+	success: {
+    color: 'green',
+    marginTop: 16,
+  },
+  error: {
+    color: 'red',
+    marginTop: 16,
+  },
+});
 
 export default LoginScreen

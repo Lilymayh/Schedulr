@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput } from 'react-native';
+import { TextInput, StyleSheet } from 'react-native';
 
 const CustomTextInput = ({ placeholder, value, onChangeText, secureTextEntry, autoCapitalize, autoCorrect }) => (
 	<TextInput style={styles.input}
@@ -11,5 +11,16 @@ const CustomTextInput = ({ placeholder, value, onChangeText, secureTextEntry, au
 		autoCorrect={autoCorrect}
 	/>
 );
+
+//basic tempporary AI generated stylings
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 12,
+    paddingHorizontal: 8,
+  },
+});
 
 export default CustomTextInput;

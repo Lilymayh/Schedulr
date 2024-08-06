@@ -1,6 +1,9 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
-import LoginScreen from '../screens/LoginScreen'; 
+import LoginScreen from '../../src/screens/LoginScreen';
+import axios from 'axios';
+
+jest.mock('axios');
 
 test('should render login form', async () => {
 	const { getByPlaceholderText, getByText } = render(<LoginScreen />);
@@ -22,6 +25,10 @@ test('should handle user input', async () => {
 
 test('should submit form successfully', async () => {
 	const { getByPlaceholderText, getByText } = render(<LoginScreen />);
+
+	axios.post.mockResolvedValue({
+		data: { success: true }
+	});
 
 	fireEvent.changeText(getByPlaceholderText('Email'), 'test@email.com');
 	fireEvent.changeText(getByPlaceholderText('Password'), 'password');
