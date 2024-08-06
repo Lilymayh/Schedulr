@@ -38,3 +38,19 @@ test('should submit form successfully', async () => {
 		expect(getByText('Login Successful')).toBeTruthy();
 	});
 });
+
+test('should submit form unsuccessfully', async () => {
+	const { getByPlaceholderText, getByText } = render(<LoginScreen />);
+
+	axios.post.mockResolvedValue({
+		data: { success: false }
+	});
+
+	fireEvent.changeText(getByPlaceholderText('Email'), 'test@email.com');
+	fireEvent.changeText(getByPlaceholderText('Password'), 'password');
+	fireEvent.press(getByText('Log In'));
+
+	await waitFor(() => {
+		expect(getByText('Login failed')).toBeTruthy();
+	});
+});
