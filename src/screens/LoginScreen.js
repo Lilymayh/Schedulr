@@ -1,18 +1,58 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, Alert } from 'react-native';
+import CustomTextInput from '../components/CustomTextInput';
+import CustomButton from '../components/CustomButton';
 import axios from 'axios';
 
 const LoginScreen = () => {
-	const [ Email, setEmail ] = useState('');
-	const [ Password, setPassword ] = useState('');
-	const [ Error, setError ] = useState('');
-	const [ Success, setSuccess ] = useState('');
+	const [ email, setEmail ] = useState('');
+	const [ password, setPassword ] = useState('');
+	const [ error, setError ] = useState('');
+	const [ success, setSuccess ] = useState('');
 
-	const handleLogin = () => {
-		//Api request
+	const handleLogin = async () => {
+		try {
+			const response = await axios.post(/* api endpoint */'', {
+				email,
+				password
+			});
+
+			if (response.data.success) {
+				setSuccess('Login Successful')
+				setError('')
+				Alert.alert('Success', 'Login Successful!')
+			}
+			setSuccess('')
+			setError('Login failed')
+			Alert.alert('Error', 'Error with Login details')
+		}
+		catch (error) {
+			setSuccess('')
+			setError('Login failed')
+			Alert.alert('Error', 'Error with login process')
+		}
 	}
 
 	return (
-		<View />
+		<View style={styles.container}>
+			<CustomTextInput
+				placeholder="Email"
+				value={email}
+				onChangeText={setEmail}
+				autoCapitalize="none"
+				autoCorrect={false}
+			/>
+			<CustomTextInput
+				placeholder="Password"
+				value={password}
+				onChangeText={setPassword}
+				secureTextEntry
+			/>
+			<CustomButton title="Log In" onPress={handleLogin} />
+			{success ? <Text style={styles.success}>{success}</Text> : null}
+			{error ? <Text style={styles.error}>{error}</Text> : null}
+		</View>
 	)
 }
+
+export default LoginScreen
