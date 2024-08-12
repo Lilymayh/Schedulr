@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, waitFor, RenderAPI } from '@testing-library/react-native';
-import CreateReminderScreen from '../../src/screens/HomeScreen';
+import CreateReminderScreen from '../../src/screens/CreateReminderScreen';
 import axios from 'axios';
 
 jest.mock('axios');
@@ -14,37 +14,41 @@ interface AxiosResponse {
 }
 
 test('should render reminder screen with elements', async () => {
-	const { getByTestId, getByText }: RenderAPI = render(<CreateReminderScreen />);
+	const { getByPlaceholderText, getByText }: RenderAPI = render(<CreateReminderScreen />);
 
-	expect(getByText('+ Reminder')).toBeTruthy();
-	expect(getByTestId('reminder-list')).toBeTruthy();
+	expect(getByPlaceholderText('Title')).toBeTruthy();
+  expect(getByPlaceholderText('Description')).toBeTruthy();
+  expect(getByPlaceholderText('ReminderTime')).toBeTruthy();
+  expect(getByText('Save')).toBeTruthy();
 })
 
 test('should submit form successfully', async () => {
-	const { getByTestId, getByText }: RenderAPI  = render(<CreateReminderScreen />);
+	const { getByPlaceholderText, getByText }: RenderAPI  = render(<CreateReminderScreen />);
 
 	(axios.post as jest.Mock).mockResolvedValue({
-		data: { success: true, reminder: [{id: 1, text: "New Reminder" }] }
+		data: { success: true }
 	} as AxiosResponse);
 
-	fireEvent.press(getByText('+ Reminder'));
-	fireEvent.changeText(getByTestId('reminder-input'), 'New Reminder');
+	fireEvent.changeText(getByPlaceholderText('Title'), 'New Reminder');
+  fireEvent.changeText(getByPlaceholderText('Description'), 'Reminder description');
+  fireEvent.changeText(getByPlaceholderText('ReminderTime'), '2024-08-08T12:00:00Z');
 	fireEvent.press(getByText('Save'));
 
 	await waitFor(() => {
-		expect(getByText('New Reminder')).toBeTruthy();
+		expect(getByText('Reminder created successfully')).toBeTruthy();
 	});
 });
 
 test('should submit form unsuccessfully', async () => {
-	const { getByTestId, getByText }: RenderAPI  = render(<CreateReminderScreen />);
+	const { getByPlaceholderText, getByText }: RenderAPI  = render(<CreateReminderScreen />);
 
 	(axios.post as jest.Mock).mockResolvedValue({
 		data: { success: false }
 	} as AxiosResponse);
 
-	fireEvent.press(getByText('+ Reminder'));
-	fireEvent.changeText(getByTestId('reminder-input'), 'New Reminder');
+	fireEvent.changeText(getByPlaceholderText('Title'), 'New Reminder');
+  fireEvent.changeText(getByPlaceholderText('Description'), 'Reminder description');
+  fireEvent.changeText(getByPlaceholderText('ReminderTime'), '2024-08-08T12:00:00Z');
 	fireEvent.press(getByText('Save'));
 
 	await waitFor(() => {
