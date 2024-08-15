@@ -12,7 +12,7 @@ const NotificationModel = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'User',
+        model: 'users',
         key: 'id'
       }
 		},
@@ -20,7 +20,7 @@ const NotificationModel = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Reminder',
+        model: 'reminders',
         key: 'id'
       }
 		},
@@ -31,17 +31,18 @@ const NotificationModel = (sequelize) => {
 		status: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
+    tableName: 'notifications',
   });
 
   Notification.associate = (models) => {
 		Notification.belongsTo(models.User, {
 			foreignKey: 'user_id',
-			as: 'user'
+			as: 'users'
 		});
 		Notification.belongsTo(models.Reminder, {
 			foreignKey: 'reminder_id',
-			as: 'reminder'
+			as: 'reminders'
 		});
 	};
 

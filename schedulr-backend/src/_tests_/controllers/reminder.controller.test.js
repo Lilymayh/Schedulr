@@ -28,7 +28,8 @@ const createReminder = async (userId) => {
 
 describe('Reminder Controller', () => {
 	beforeAll(async () => {
-		await sequelize.sync();
+		await sequelize.authenticate();
+    await sequelize.sync({ force: true });
 	});
 
 	afterAll(async () => {

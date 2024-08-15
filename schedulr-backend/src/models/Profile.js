@@ -12,7 +12,7 @@ const ProfileModel = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'User',
+        model: 'users',
         key: 'id'
       }
 		},
@@ -28,6 +28,7 @@ const ProfileModel = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    tableName: 'profiles',
   });
 
   Profile.associate = (models) => {

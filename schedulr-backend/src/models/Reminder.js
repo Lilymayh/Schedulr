@@ -12,7 +12,15 @@ const ReminderModel = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'User',
+        model: 'users',
+        key: 'id'
+      }
+		},
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'categories',
         key: 'id'
       }
 		},
@@ -29,19 +37,24 @@ const ReminderModel = (sequelize) => {
       allowNull: false,
     }
 	}, {
+    tableName: 'reminders',
 		timestamps: true
   });
 
   Reminder.associate = (models) => {
 		Reminder.belongsTo(models.User, {
 			foreignKey: 'user_id',
-			as: 'user'
+			as: 'users'
 		});
     Reminder.hasMany(models.Notification, { 
       foreignKey: 'reminder_id',
       onDelete: 'CASCADE',
       as: 'notifications' 
     });
+    Reminder.belongsTo(models.Category, {
+			foreignKey: 'category_id',
+			as: 'categories'
+		});
 	};
 
 	return Reminder;

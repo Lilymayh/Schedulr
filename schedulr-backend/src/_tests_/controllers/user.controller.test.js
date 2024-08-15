@@ -18,7 +18,8 @@ describe('User Controller', () => {
 	let userId;
 
 	beforeAll(async () => {
-		await sequelize.sync();
+		await sequelize.authenticate();
+    await sequelize.sync({ force: true });
 	});
 
 	afterAll(async () => {

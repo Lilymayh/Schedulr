@@ -25,6 +25,7 @@ const UserModel = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    tableName: 'users',
   });
 
   User.beforeCreate(async (user) => {
