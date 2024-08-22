@@ -7,6 +7,7 @@ const userRoutes = require('./src/routes/userRoutes');
 const profileRoutes = require('./src/routes/profileRoutes');
 const reminderRoutes = require('./src/routes/reminderRoutes');
 const notificationRoutes = require('./src/routes/notificationRoutes');
+const categoryRoutes = require('./src/routes/categoryRoutes')
 const authenticationRoutes = require('./src/routes/authenticationRoutes')
 
 //Middleware
@@ -27,6 +28,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/profiles', profileRoutes);
 app.use('/api/reminders', reminderRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/categories', categoryRoutes);
 app.use('/api', authenticationRoutes);
 
 module.exports = app;
