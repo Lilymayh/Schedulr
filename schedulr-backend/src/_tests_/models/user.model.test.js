@@ -12,8 +12,7 @@ const createUser = async () => {
 			email: 'test@email.com',
 			password: 'password'
 		});
-    console.log('Response Body:', response.body);
-	return response.body;
+ 	return response.body;
 };
 
 describe('User Model', () => {

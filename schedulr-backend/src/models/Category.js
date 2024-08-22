@@ -37,6 +37,7 @@ const CategoryModel = (sequelize) => {
     });
 		Category.hasMany(models.Reminder, {
 			foreignKey: 'category_id',
+			onDelete: 'RESTRICT',
 			as: 'reminders'
 		});
 	};

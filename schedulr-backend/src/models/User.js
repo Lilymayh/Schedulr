@@ -51,8 +51,12 @@ const UserModel = (sequelize) => {
       foreignKey: 'user_id',
       onDelete: 'CASCADE',
 			as: 'notifications'
-    })
-		
+    });
+    User.hasMany(models.Notification, {
+      foreignKey: 'user_id',
+      onDelete: 'CASCADE',
+			as: 'categories'
+    });
 	};
 
 	return User;

@@ -1,4 +1,4 @@
-const { User, Category } = require('../../models');
+const { User, Category, Reminder } = require('../../models');
 const { sequelize } = require('../../../config/sequelize');
 const app = require('../../../app');
 const request = require('supertest');
@@ -14,78 +14,82 @@ const createUser = async () => {
 	return response.body;
 };
 
-const createCategory = async (userId) => {
+const createCategory = async (userId, name) => {
 	const response = await request(app)
 		.post('/api/categories')
 		.send({
 			user_id: userId,
-			name: 'testCategory',
+			name,
 			emoji: '🍡'
 		});
 	return response.body;
 };
 
 describe('Category Controller', () => {
+	let userId;
+	let categoryId;
+	let category;
+
 	beforeAll(async () => {
 		await sequelize.authenticate();
-    await sequelize.sync();
+		await sequelize.sync();
 	});
 
 	afterAll(async () => {
 		await sequelize.close();
 	});
 
-	it('should create a category', async () => {
+	//Create a user and category before each test
+	beforeEach(async () => {
 		const user = await createUser();
-		const userId = user.id;
-		const category = await createCategory(userId);
+		userId = user.id;
 
-		expect(category).toHaveProperty('id');
-		expect(category).toHaveProperty('user_id', userId);
-		expect(category).toHaveProperty('name', 'testCategory');
-		expect(category).toHaveProperty('emoji', '🍡');
+		const categoryName = `testCategory_${Date.now()}`;
+		const createdCategory = await createCategory(userId, categoryName);
+		categoryId = createdCategory.id;
+		category = createdCategory;
+	});
+
+	//Clean them up
+	afterEach(async () => {
+		await sequelize.truncate({ cascade: true });
+	});
+
+
+	it('should create a category', async () => {
+		const categoryName = `testCategory_${Date.now()}`;
+    const createdCategory = await createCategory(userId, categoryName);
+
+		expect(createdCategory).toHaveProperty('id');
+		expect(createdCategory).toHaveProperty('user_id', userId);
+		expect(createdCategory).toHaveProperty('name', categoryName);
+		expect(createdCategory).toHaveProperty('emoji', '🍡');
 	});
 
 	it('should get a category', async () => {
-		const user = await createUser();
-		const userId = user.id;
-		const category = await createCategory(userId);
-		const categoryId = category.id;
-
 		const getCategory = await request(app)
 			.get(`/api/categories/${categoryId}`);
 
 		expect(getCategory.status).toBe(200);
 		expect(getCategory.body).toHaveProperty('id', categoryId);
-		expect(getCategory.body).toHaveProperty('name', 'testCategory');
+		expect(getCategory.body).toHaveProperty('name', category.name);
 		expect(getCategory.body).toHaveProperty('emoji', '🍡');
 	});
 
 	it('should update a category', async () => {
-		const user = await createUser();
-		const userId = user.id;
-		const category = await createCategory(userId);
-		const categoryId = category.id;
-
 		const updateCategory = await request(app)
 			.put(`/api/categories/${categoryId}`)
 			.send({
-				name: 'newCategoryName',
+				name: 'updatedCategoryName',
 				emoji: '🍣'
 			});
 
 		expect(updateCategory.status).toBe(200);
-		expect(updateCategory.body).toHaveProperty('name', 'newCategoryName');
+		expect(updateCategory.body).toHaveProperty('name', 'updatedCategoryName');
 		expect(updateCategory.body).toHaveProperty('emoji', '🍣');
 	});
 
 	it('should delete a user and associated category', async () => {
-		const user = await createUser();
-		const userId = user.id;
-
-		const category = await createCategory(userId);
-		const categoryId = category.id;
-
 		await request(app)
 			.delete(`/api/users/${userId}`)
 			.expect(204);

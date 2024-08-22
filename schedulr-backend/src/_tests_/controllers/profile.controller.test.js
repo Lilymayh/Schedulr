@@ -36,6 +36,10 @@ describe('Profile Controller', () => {
 		await sequelize.close();
 	});
 
+	afterEach(async () => {
+    await sequelize.truncate({ cascade: true });
+  });
+
 	it('should create a profile', async () => {
 		const user = await createUser();
 		const userId = user.id;
