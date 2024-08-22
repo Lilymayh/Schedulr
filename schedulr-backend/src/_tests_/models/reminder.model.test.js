@@ -2,6 +2,7 @@ const { User, Reminder, sequelize } = require('../../models');
 
 describe('Reminder Model', () => {
   beforeAll(async () => {
+    await sequelize.authenticate();
     await sequelize.sync();
   });
 

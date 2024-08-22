@@ -3,6 +3,7 @@ const { User, Notification, Reminder, sequelize } = require('../../models');
 
 describe('Notification Model', () => {
   beforeAll(async () => {
+    await sequelize.authenticate();
     await sequelize.sync();
   });
 
@@ -35,8 +36,9 @@ describe('Notification Model', () => {
       include: { model: User, as: 'user' }
     });
 
-    expect(fetchedNotification.user_id).toBe(user.id);
-    expect(fetchedNotification.user.username).toBe('user');
+  expect(fetchedNotification).not.toBeNull();
+  expect(fetchedNotification.user_id).toBe(user.id);
+  expect(fetchedNotification.user.username).toBe('user');
   });
 
   it('should create a notification belonging to a reminder', async () => {
@@ -64,6 +66,7 @@ describe('Notification Model', () => {
       include: { model: Reminder, as: 'reminder' }
     });
 
+    expect(fetchedNotification).not.toBeNull();
     expect(fetchedNotification.reminder_id).toBe(reminder.id);
 		expect(fetchedNotification.reminder.title).toBe('Reminder Title');
   });

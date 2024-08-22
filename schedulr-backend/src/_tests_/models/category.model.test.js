@@ -4,7 +4,7 @@ const { User, Reminder, Category, sequelize } = require('../../models');
 describe('Category Model', () => {
 	beforeAll(async () => {
 		await sequelize.authenticate();
-    await sequelize.sync({ force: true });
+    await sequelize.sync();
 	});
 
 	afterAll(async () => {
@@ -22,6 +22,7 @@ describe('Category Model', () => {
     const category = await Category.create({
       name: 'baking',
       emoji: '🍰',
+      user_id: user.id
     });
     //Create Reminders and associate them with a category
     const reminder1 = await Reminder.create({
@@ -50,14 +51,22 @@ describe('Category Model', () => {
   });
 
   it('should create a category with or without emoji(s)', async () => {
+    const user = await User.create({
+      username: 'user',
+      email: 'test@email.com',
+      password: 'password'
+    });
+
     const category1 = await Category.create({
       name: 'Berry picking',
       emoji: '🍓🍒🎂',
+      user_id: user.id
     });
 
     const category2 = await Category.create({
       name: 'work',
       emoji: null,
+      user_id: user.id
     });
 
     expect(category1.emoji).toBe('🍓🍒🎂');

@@ -44,7 +44,7 @@ const ReminderModel = (sequelize) => {
   Reminder.associate = (models) => {
 		Reminder.belongsTo(models.User, {
 			foreignKey: 'user_id',
-			as: 'users'
+			as: 'user'
 		});
     Reminder.hasMany(models.Notification, { 
       foreignKey: 'reminder_id',
@@ -53,7 +53,7 @@ const ReminderModel = (sequelize) => {
     });
     Reminder.belongsTo(models.Category, {
 			foreignKey: 'category_id',
-			as: 'categories'
+			as: 'category'
 		});
 	};
 

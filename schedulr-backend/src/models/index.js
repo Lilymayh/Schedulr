@@ -18,7 +18,7 @@ User.associate({ Reminder, Profile, Notification });
 Reminder.associate({ User, Notification, Category });
 Profile.associate({ User }); 
 Notification.associate({ User, Reminder });
-Category.associate({ Reminder });
+Category.associate({ User, Reminder });
 
 
 module.exports = { sequelize, User, Reminder, Profile, Notification, Category };

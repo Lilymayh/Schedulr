@@ -8,6 +8,14 @@ const CategoryModel = (sequelize) => {
 			primaryKey: true,
 			allowNull: false
 		},
+		user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    },
 		name: {
 			type: DataTypes.STRING,
 			allowNull: false,
@@ -16,11 +24,17 @@ const CategoryModel = (sequelize) => {
 		emoji: {
 			type: DataTypes.STRING,
 			allowNull: true
-		},
-		tableName: 'categories',
-	});
+		}
+	}, {
+		 tableName: 'categories',
+		 timestamps: true
+	 });
 
 	Category.associate = (models) => {
+		Category.belongsTo(models.User, {
+      foreignKey: 'user_id',
+      as: 'user'
+    });
 		Category.hasMany(models.Reminder, {
 			foreignKey: 'category_id',
 			as: 'reminders'

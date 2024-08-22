@@ -21,12 +21,14 @@ const UserModel = (sequelize) => {
 				isEmail: true
 			},
     },
-    password: {
+    password: { 
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    tableName: 'users',
-  });
+    }
+   }, {
+      tableName: 'users',
+      timestamps: true
+    });
 
   User.beforeCreate(async (user) => {
     if (user.password) {
@@ -35,6 +37,11 @@ const UserModel = (sequelize) => {
   });
 
 	User.associate = (models) => {
+    User.hasOne(models.Profile, {
+			foreignKey: 'user_id',
+      onDelete: 'CASCADE',
+			as: 'profile',
+		});
     User.hasMany(models.Reminder, {
       foreignKey: 'user_id',
       onDelete: 'CASCADE',
@@ -45,11 +52,7 @@ const UserModel = (sequelize) => {
       onDelete: 'CASCADE',
 			as: 'notifications'
     })
-		User.hasOne(models.Profile, {
-			foreignKey: 'user_id',
-      onDelete: 'CASCADE',
-			as: 'profile',
-		});
+		
 	};
 
 	return User;

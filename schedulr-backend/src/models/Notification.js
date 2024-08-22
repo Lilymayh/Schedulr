@@ -31,18 +31,20 @@ const NotificationModel = (sequelize) => {
 		status: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    tableName: 'notifications',
-  });
+    }
+  }, {
+     tableName: 'notifications', 
+     timestamps: true
+   });
 
   Notification.associate = (models) => {
 		Notification.belongsTo(models.User, {
 			foreignKey: 'user_id',
-			as: 'users'
+			as: 'user'
 		});
 		Notification.belongsTo(models.Reminder, {
 			foreignKey: 'reminder_id',
-			as: 'reminders'
+			as: 'reminder'
 		});
 	};
 

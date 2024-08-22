@@ -27,9 +27,11 @@ const ProfileModel = (sequelize) => {
     last_name: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    tableName: 'profiles',
-  });
+    }
+  }, {
+     tableName: 'profiles',
+     timestamps: true
+   });
 
   Profile.associate = (models) => {
 		Profile.belongsTo(models.User, {

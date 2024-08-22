@@ -29,7 +29,7 @@ const createProfile = async (userId) => {
 describe('Profile Controller', () => {
 	beforeAll(async () => {
 		await sequelize.authenticate();
-    await sequelize.sync({ force: true });
+    await sequelize.sync();
 	});
 
 	afterAll(async () => {

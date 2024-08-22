@@ -20,6 +20,7 @@ describe('User Model', () => {
   let user;
   
 	beforeAll(async () => {
+    await sequelize.authenticate();
     await sequelize.sync();
   });
 

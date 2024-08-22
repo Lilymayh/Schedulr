@@ -1,8 +1,8 @@
 const { Reminder } = require('../models');
 
 const createReminder = async (req, res) => {
-	const { user_id, title, description, reminder_time } = req.body;
-	const reminder = await Reminder.create({ user_id, title, description, reminder_time });
+	const { user_id, title, description, reminder_time, category_id } = req.body;
+	const reminder = await Reminder.create({ user_id, title, description, reminder_time, category_id });
 
 	res.status(201).json(reminder);
 };

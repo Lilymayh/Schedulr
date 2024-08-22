@@ -3,7 +3,8 @@ const { User, Profile, sequelize } = require('../../models');
 
 describe('Profile Model', () => {
   beforeAll(async () => {
-    await sequelize.sync();
+    await sequelize.authenticate();
+    await sequelize.sync(); 
   });
 
   afterAll(async () => {
